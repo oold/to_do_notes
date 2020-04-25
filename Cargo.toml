@@ -1,0 +1,12 @@
+[package]
+name = "to_do_notes"
+version = "0.1.0"
+authors = ["Oliver Old <oliver.old@outlook.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+app_dirs = "^1"
+chrono = "^0"
+rusqlite = { version = "^0", features = ["bundled", "chrono"] }
