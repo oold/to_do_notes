@@ -35,14 +35,14 @@ fn create_item(database: &Connection) {
     let result = read_line();
     if result.is_err() {
         print_error(result.unwrap_err());
-        return;
+        return
     }
     let title = result.unwrap();
     print_prompt("Enter the to do note: ");
     let result = read_line();
     if result.is_err() {
         print_error(result.unwrap_err());
-        return;
+        return
     }
     let content = result.unwrap();
     database.execute(
@@ -80,7 +80,7 @@ fn mark_done(database: &Connection) {
     let result = get_item_selection();
     if result.is_err() {
         print_error(result.unwrap_err());
-        return;
+        return
     }
     let choice = result.unwrap();
     let mut statement = database.prepare("SELECT done FROM to_do_notes WHERE id = ?1").unwrap();
@@ -91,7 +91,7 @@ fn mark_done(database: &Connection) {
     let first_note = notes.next();
     if first_note.is_none() {
         eprintln!("Chosen to do note does not exist.");
-        return;
+        return
     }
     let done = first_note.unwrap().unwrap();
     let mut statement = database.prepare("UPDATE to_do_notes SET done = ?1 WHERE id = ?2").unwrap();
@@ -103,26 +103,26 @@ fn remove_item(database: &Connection) {
     let result = get_item_selection();
     if result.is_err() {
         print_error(result.unwrap_err());
-        return;
+        return
     }
     let choice = result.unwrap();
     let mut statement = database.prepare("DELETE FROM to_do_notes WHERE id = ?1").unwrap();
     let rows_deleted = statement.execute(params![choice]).unwrap();
     if rows_deleted == 0 {
         eprintln!("Chosen to do note does not exist.");
-        return;
+        return
     }
 }
 
 fn get_item_selection() -> Result<i32, &'static str> {
     let result = read_line();
     if result.is_err() {
-        return Err(result.unwrap_err());
+        return Err(result.unwrap_err())
     }
     let choice = result.unwrap();
     let parse_result = choice.parse::<i32>();
     if parse_result.is_err() {
-        return Err("Invalid input for index.");
+        return Err("Invalid input for index.")
     }
     Ok(parse_result.unwrap())
 }
@@ -131,7 +131,7 @@ fn read_line() -> Result<String, &'static str> {
     let mut input = String::new();
     let result = stdin().read_line(&mut input);
     if result.is_err() {
-        return Err("Could not read input.");
+        return Err("Could not read input.")
     }
     Ok(input.trim_end().to_string())
 }
