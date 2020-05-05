@@ -137,14 +137,17 @@ fn read_line() -> Result<String, &'static str> {
 }
 
 fn print_prompt(prompt: &str) {
-    let mut stdout = stdout();
+    let stdout = stdout();
+    let mut stdout = stdout.lock();
     stdout.write_all(prompt.as_bytes()).unwrap();
     stdout.flush().unwrap();
 }
 
 fn print_error(error: &str) {
-    let mut stderr = stderr();
+    let stderr = stderr();
+    let mut stderr = stderr.lock();
     stderr.write_all(error.as_bytes()).unwrap();
+    stderr.write_all("\n".as_bytes()).unwrap();
     stderr.flush().unwrap();
 }
 
